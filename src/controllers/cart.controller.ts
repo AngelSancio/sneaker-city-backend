@@ -3,11 +3,7 @@ import { Response, Request } from 'express';
 
 export function getCart(req: Request, res: Response) {
     try {
-        let results = db.getData("/products");
-
-        results.sort((firstProduct: any, secondProduct: any) => {
-            return new Date(secondProduct.releaseDate).getTime() - new Date(firstProduct.releaseDate).getTime();
-        })
+        let results = db.getData("/cart");
         if (results.length == 0) {
             return res.status(200).json({
                 message: "There isn´t any sneaker"
@@ -16,7 +12,7 @@ export function getCart(req: Request, res: Response) {
         else {
 
             return res.status(200).json({
-                message: "return products",
+                message: "return cart",
                 result: results
             })
         }
@@ -31,88 +27,89 @@ export function getCart(req: Request, res: Response) {
 }
 
 export function addProductToCart(req: Request, res: Response) {
+    const data = req.body;
+
     try {
-        let results = db.getData("/products");
+        let product = db.getIndex("/products", data.productId, "id");
+        let results: any;
 
-        results.sort((firstProduct: any, secondProduct: any) => {
-            return new Date(secondProduct.releaseDate).getTime() - new Date(firstProduct.releaseDate).getTime();
+        if (product !== -1) {
+            db.push("/cart[]", data);
+            results = db.getData("/cart");
+        } else {
+            throw "The product doesn´t exist";
+        }
+        
+        return res.status(200).json({
+            message:"Product added to cart",
+            result: results
         })
-        if (results.length == 0) {
-            return res.status(200).json({
-                message: "There isn´t any sneaker"
-            })
-        }
-        else {
 
-            return res.status(200).json({
-                message: "return products",
-                result: results
-            })
-        }
     } catch (error) {
         console.error(error);
         return res.status(400).json({
-            mensaje: "Ha ocurrido un error",
-            status: 400,
+            message:"An error ocurred",
             error: error
-        })
+        })   
     }
 }
 
 export function updateProductInCart(req: Request, res: Response) {
+    const data = req.body;
+    let message = "The product you try to modify is not in the car"
+    console.log(data)
+
     try {
-        let results = db.getData("/products");
 
-        results.sort((firstProduct: any, secondProduct: any) => {
-            return new Date(secondProduct.releaseDate).getTime() - new Date(firstProduct.releaseDate).getTime();
+        const index = db.getIndex("/cart", data.productId, "productId");
+
+        if (index !== -1) {
+            db.push("/cart[" + index + "]", data);
+            message = "Product on cart updated"
+        } else {
+            throw message
+        }
+        
+        return res.status(200).json({
+            message: message,
+            result: index
         })
-        if (results.length == 0) {
-            return res.status(200).json({
-                message: "There isn´t any sneaker"
-            })
-        }
-        else {
 
-            return res.status(200).json({
-                message: "return products",
-                result: results
-            })
-        }
     } catch (error) {
         console.error(error);
         return res.status(400).json({
-            mensaje: "Ha ocurrido un error",
-            status: 400,
+            message:"An error ocurred",
             error: error
-        })
+        })   
     }
 }
 
 export function deleteProductFromCart(req: Request, res: Response) {
+    const data = req.body;
+    let message = "The product you try to delete is not in the car"
+    console.log(data)
+
     try {
-        let results = db.getData("/products");
 
-        results.sort((firstProduct: any, secondProduct: any) => {
-            return new Date(secondProduct.releaseDate).getTime() - new Date(firstProduct.releaseDate).getTime();
+        const index = db.getIndex("/cart", data.productId, "productId");
+
+        if (index !== -1) {
+            db.delete("/cart[" + index + "]");
+            message = "Product on cart deleted";
+        } else {
+            throw message
+        }
+
+        return res.status(200).json({
+            message: message,
+            result: index
         })
-        if (results.length == 0) {
-            return res.status(200).json({
-                message: "There isn´t any sneaker"
-            })
-        }
-        else {
 
-            return res.status(200).json({
-                message: "return products",
-                result: results
-            })
-        }
     } catch (error) {
         console.error(error);
         return res.status(400).json({
-            mensaje: "Ha ocurrido un error",
-            status: 400,
+            message:"An error ocurred",
             error: error
-        })
+        })   
     }
 }
