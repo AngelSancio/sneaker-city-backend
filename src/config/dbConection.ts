@@ -6,7 +6,7 @@ import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
 
 const database = new JsonDB(new Config("sneaker", true, false, "/"));
 // db.push("/test1","super test");
-const data = database.getData("/sneakers");
+// const data = database.getData("/sneakers");
 // console.log(data);
 
 // Conexion a la base de datos
