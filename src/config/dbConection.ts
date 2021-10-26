@@ -1,6 +1,13 @@
 import config from './config';
 import util from 'util';
 import mysql from 'mysql';
+import { JsonDB } from 'node-json-db';
+import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
+
+const database = new JsonDB(new Config("sneaker", true, false, "/"));
+// db.push("/test1","super test");
+const data = database.getData("/sneakers");
+// console.log(data);
 
 // Conexion a la base de datos
 const dbConfig = {
@@ -9,6 +16,8 @@ const dbConfig = {
     password: config.db.password,
     database: config.db.database
 }
+
+export const db = database;
 
 export function connection() {
     const connection = mysql.createConnection( dbConfig );

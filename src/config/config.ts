@@ -6,8 +6,6 @@ if (result.error) {
     throw result.error
 }
 
-console.log(result)
-
 export default {
     db:{
         host:process.env.DB_HOST,

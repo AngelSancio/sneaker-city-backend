@@ -1,5 +1,5 @@
 import { app } from "./config/app";
-import directionsRouter from "./routes/directions";
+import sneakersRouter from "./routes/sneakers";
 
 // Rutas
-app.use('/api/v1/directions',directionsRouter)
+app.use('/api/v1/sneakers',sneakersRouter)
