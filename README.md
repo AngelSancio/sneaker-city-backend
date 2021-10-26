@@ -2,8 +2,8 @@
 Clone the repo and install the dependencies.
 
 ```sh
-git clone https://github.com/AngelSancio/directions.git
-cd directions
+git clone https://github.com/AngelSancio/sneaker-city-backend.git
+cd sneaker-city-backend
 npm install
 ```
 
@@ -14,4 +14,4 @@ To start the express server, run the following
 npm run dev
 ```
 
-Open http://localhost:3000 and take a look around.
+Open http://localhost:3001 and take a look around.
