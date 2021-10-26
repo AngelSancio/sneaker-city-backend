@@ -57,14 +57,15 @@ export function addProductToCart(req: Request, res: Response) {
 export function updateProductInCart(req: Request, res: Response) {
     const data = req.body;
     let message = "The product you try to modify is not in the car"
-    console.log(data)
+    let results: any;
 
     try {
 
         const index = db.getIndex("/cart", data.productId, "productId");
 
         if (index !== -1) {
-            db.push("/cart[" + index + "]", data);
+            db.push(`/cart[${index}]`, data);
+            results = db.getData("/cart");
             message = "Product on cart updated"
         } else {
             throw message
@@ -72,7 +73,7 @@ export function updateProductInCart(req: Request, res: Response) {
         
         return res.status(200).json({
             message: message,
-            result: index
+            result: results
         })
 
     } catch (error) {
@@ -87,6 +88,7 @@ export function updateProductInCart(req: Request, res: Response) {
 export function deleteProductFromCart(req: Request, res: Response) {
     const data = req.body;
     let message = "The product you try to delete is not in the car"
+    let results: any;
     console.log(data)
 
     try {
@@ -94,7 +96,8 @@ export function deleteProductFromCart(req: Request, res: Response) {
         const index = db.getIndex("/cart", data.productId, "productId");
 
         if (index !== -1) {
-            db.delete("/cart[" + index + "]");
+            db.delete(`/cart[${index}]`);
+            results = db.getData("/cart");
             message = "Product on cart deleted";
         } else {
             throw message
