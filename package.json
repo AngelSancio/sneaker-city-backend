@@ -1,0 +1,40 @@
+{
+  "name": "directions",
+  "version": "1.0.0",
+  "description": "Save directions of the clients",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "dev": "nodemon --config nodemon.json src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AngelSancio/directions.git"
+  },
+  "author": "Angel Sancio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AngelSancio/directions/issues"
+  },
+  "homepage": "https://github.com/AngelSancio/directions#readme",
+  "devDependencies": {
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.11",
+    "@types/morgan": "^1.9.2",
+    "@types/mysql": "^2.15.18",
+    "@types/node-json-db": "^0.9.3",
+    "nodemon": "^2.0.7",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "node-json-db": "^1.3.0"
+  }
+}
