@@ -2,7 +2,7 @@ import { db } from "../config/dbConection";
 import { Response, Request } from 'express';
 
 export function getCart(req: Request, res: Response) {
-    let message = "Return cart"
+    let message = "Cart obtained"
     try {
         let results = db.getData("/cart");
         if (results.length == 0) {
@@ -91,7 +91,7 @@ export function updateProductInCart(req: Request, res: Response) {
 
 export function deleteProductFromCart(req: Request, res: Response) {
     const data = req.body;
-    let message = "The product you try to delete is not in the car"
+    let message = "The product you try to remove is not in the car"
     let results: any;
 
     try {
@@ -101,7 +101,7 @@ export function deleteProductFromCart(req: Request, res: Response) {
         if (index !== -1) {
             db.delete(`/cart[${index}]`);
             results = db.getData("/cart");
-            message = "Product on cart deleted";
+            message = "Product on cart removed";
         } else {
             throw message
         }
@@ -128,7 +128,7 @@ export function deleteCart(req: Request, res: Response) {
         let results = db.getData("/cart");
 
         return res.status(200).json({
-            message: "Cart deleted",
+            message: "Cart checked out!",
             result: results
         })
 
