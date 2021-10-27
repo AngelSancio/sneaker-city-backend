@@ -2,20 +2,18 @@ import { db } from "../config/dbConection";
 import { Response, Request } from 'express';
 
 export function getCart(req: Request, res: Response) {
+    let message = "Return cart"
     try {
         let results = db.getData("/cart");
         if (results.length == 0) {
-            return res.status(200).json({
-                message: "There isn´t any sneaker"
-            })
+            message = "The cart is empty"
         }
-        else {
 
-            return res.status(200).json({
-                message: "return cart",
-                result: results
-            })
-        }
+        return res.status(200).json({
+            message: message,
+            result: results
+        })
+        
     } catch (error) {
         console.error(error);
         return res.status(400).json({
@@ -39,18 +37,18 @@ export function addProductToCart(req: Request, res: Response) {
         } else {
             throw "The product doesn´t exist";
         }
-        
+
         return res.status(200).json({
-            message:"Product added to cart",
+            message: "Product added to cart",
             result: results
         })
 
     } catch (error) {
         console.error(error);
         return res.status(400).json({
-            message:"An error ocurred",
+            message: "An error ocurred",
             error: error
-        })   
+        })
     }
 }
 
@@ -70,7 +68,7 @@ export function updateProductInCart(req: Request, res: Response) {
         } else {
             throw message
         }
-        
+
         return res.status(200).json({
             message: message,
             result: results
@@ -79,9 +77,9 @@ export function updateProductInCart(req: Request, res: Response) {
     } catch (error) {
         console.error(error);
         return res.status(400).json({
-            message:"An error ocurred",
+            message: "An error ocurred",
             error: error
-        })   
+        })
     }
 }
 
@@ -89,7 +87,6 @@ export function deleteProductFromCart(req: Request, res: Response) {
     const data = req.body;
     let message = "The product you try to delete is not in the car"
     let results: any;
-    console.log(data)
 
     try {
 
@@ -105,14 +102,35 @@ export function deleteProductFromCart(req: Request, res: Response) {
 
         return res.status(200).json({
             message: message,
-            result: index
+            result: results
         })
 
     } catch (error) {
         console.error(error);
         return res.status(400).json({
-            message:"An error ocurred",
+            message: "An error ocurred",
             error: error
-        })   
+        })
+    }
+}
+
+export function deleteCart(req: Request, res: Response) {
+
+    try {
+
+        db.push(`/cart`, []);
+        let results = db.getData("/cart");
+
+        return res.status(200).json({
+            message: "Cart deleted",
+            result: results
+        })
+
+    } catch (error) {
+        console.error(error);
+        return res.status(400).json({
+            message: "An error ocurred",
+            error: error
+        })
     }
 }
