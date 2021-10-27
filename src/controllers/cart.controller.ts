@@ -28,11 +28,17 @@ export function addProductToCart(req: Request, res: Response) {
     const data = req.body;
 
     try {
-        let product = db.getIndex("/products", data.productId, "id");
+        const product = db.getIndex("/products", data.productId, "id");
+        const index = db.getIndex("/cart", data.productId, "productId");
         let results: any;
 
+
         if (product !== -1) {
-            db.push("/cart[]", data);
+            if (index !== -1) {
+                db.push(`/cart[${index}]`, data)
+            } else {
+                db.push("/cart[]", data);
+            }
             results = db.getData("/cart");
         } else {
             throw "The product doesn´t exist";

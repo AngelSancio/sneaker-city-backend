@@ -14,7 +14,7 @@ const options: cors.CorsOptions = {
         'Access-Control-Allow-Origin'
     ],
     credentials: true,
-    methods: 'GET,OPTIONS,PUT,POST',
+    methods: 'GET,OPTIONS,PUT,POST,DELETE',
     origin: '*',
     preflightContinue: false,
 };
